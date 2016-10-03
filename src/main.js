@@ -1,18 +1,19 @@
 let shelves = [
-    { name: "Zenozoic", answer: 0 },
-    { name: "Neogene", answer: 1 },
-    { name: "Paleogene", answer: 2 },
-    { name: "Mesozoic", answer: 3 },
-    { name: "Cretaceous", answer: 4 },
-    { name: "Jurassic", answer: 5 },
-    { name: "Triassic", answer: 6 },
-    { name: "Paleozoic", answer: 7 },
-    { name: "Permian", answer: 8 },
-    { name: "Carboniferous", answer: 9 },
-    { name: "Devonian", answer: 10 },
-    { name: "Silurian", answer: 11 },
-    { name: "Ordovician", answer: 12 },
-    { name: "Cambrian", answer: 13 },
+    { name: "Cenozoic", color: "F2F91D", answer: 0 },
+    { name: "Quaternary", color: "F9F97F", answer: 100 },
+    { name: "Neogene", color: "FFE619", answer: 1 },
+    { name: "Paleogene", color: "FD9A52", answer: 2 },
+    { name: "Mesozoic", color: "67C5CA", answer: 3 },
+    { name: "Cretaceous", color: "7FC64E", answer: 4 },
+    { name: "Jurassic", color: "34B2C9", answer: 5 },
+    { name: "Triassic", color: "812B92", white: true, answer: 6 },
+    { name: "Paleozoic", color: "99C08D", answer: 7 },
+    { name: "Permian", color: "F04028", answer: 8 },
+    { name: "Carboniferous", color: "67A599", answer: 9 },
+    { name: "Devonian", color: "CB8C37", answer: 10 },
+    { name: "Silurian", color: "B3E1B6", answer: 11 },
+    { name: "Ordovician", color: "009270", white: true, answer: 12 },
+    { name: "Cambrian", color: "7FA056", answer: 13 },
 ];
 
 let SG = document.getElementById('Shelfgroup');
@@ -39,7 +40,8 @@ for (let i=0; i<shelves.length; i++) {
     let s = document.createElement('div');
     SG.appendChild(s);
     shelf.dom = s;
-    s.innerHTML = `<span>${shelf.name}</span>`;
+    s.innerHTML = `<span style="color:${shelf.white?'white':'auto'}">${shelf.name}</span>`;
+    s.style.background = '#'+shelf.color;
     s.style.left = (50+Math.random()*40)+"vw";
     s.style.top = (10+Math.random()*80)+"vh";
     let drag = (e) => {
