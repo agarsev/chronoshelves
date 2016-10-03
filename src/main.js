@@ -113,7 +113,7 @@ for (let i=0; i<shelves.length; i++) {
             let c = cells[drop];
             let rect = c.getBoundingClientRect();
             if (c.rowSpan>1) {
-                s.style.left = ((rect.right+rect.left)/2-s.clientWidth/2) + 'px';
+                s.style.left = ((rect.right+rect.left)/2-(rect.bottom-rect.top)/2) + 'px';
                 s.style.top = ((rect.top+rect.bottom)/2-s.clientHeight/2) + 'px';
             } else {
                 s.style.left = rect.left + 'px';
