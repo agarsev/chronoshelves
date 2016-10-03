@@ -1,28 +1,36 @@
-let shelves = [
-    { name: "Cenozoic", color: "F2F91D", answer: 0 },
-    { name: "Quaternary", color: "F9F97F", answer: 100 },
-    { name: "Neogene", color: "FFE619", answer: 1 },
-    { name: "Paleogene", color: "FD9A52", answer: 2 },
-    { name: "Mesozoic", color: "67C5CA", answer: 3 },
-    { name: "Cretaceous", color: "7FC64E", answer: 4 },
-    { name: "Jurassic", color: "34B2C9", answer: 5 },
-    { name: "Triassic", color: "812B92", white: true, answer: 6 },
-    { name: "Paleozoic", color: "99C08D", answer: 7 },
-    { name: "Permian", color: "F04028", answer: 8 },
-    { name: "Carboniferous", color: "67A599", answer: 9 },
-    { name: "Devonian", color: "CB8C37", answer: 10 },
-    { name: "Silurian", color: "B3E1B6", answer: 11 },
-    { name: "Ordovician", color: "009270", white: true, answer: 12 },
-    { name: "Cambrian", color: "7FA056", answer: 13 },
+/** DATA **/
+
+let ages = [
+    { name: "Cenozoic", color: "F2F91D", sub: [
+        //{ name: "Quaternary", color: "F9F97F" },
+        { name: "Quaternary", color: "F9F97F", sub: [
+            { name: "Holocene", color: "FEF2E0" },
+            { name: "Pleistocene", color: "FFF2AE" }]
+        },
+        //{ name: "Neogene", color: "FFE619" },
+        { name: "Neogene", color: "FFE619", sub: [
+            { name: "Pliocene", color: "FFFF99" },
+            { name: "Miocene", color: "FFFF00" }]
+        },
+        { name: "Paleogene", color: "FD9A52" }]
+    },
+    { name: "Mesozoic", color: "67C5CA", sub: [
+        { name: "Cretaceous", color: "7FC64E" },
+        { name: "Jurassic", color: "34B2C9" },
+        { name: "Triassic", color: "812B92", white: true }]
+    },
+    { name: "Paleozoic", color: "99C08D", sub: [
+        { name: "Permian", color: "F04028" },
+        { name: "Carboniferous", color: "67A599" },
+        { name: "Devonian", color: "CB8C37" },
+        { name: "Silurian", color: "B3E1B6" },
+        { name: "Ordovician", color: "009270", white: true },
+        { name: "Cambrian", color: "7FA056" }]
+    },
+    { name: "Precambrian", color: "F74370" }
 ];
 
-let SG = document.getElementById('Shelfgroup');
-let CS = document.getElementById('Chronoshelves');
-let minleft = CS.getBoundingClientRect().right + 10;
-let cells = CS.querySelectorAll('td');
-let dragged = -1;
-let drop = -1;
-let totalCorrect = 0;
+/** UTILITY **/
 
 function addClass (el, cname) {
     if (el.className.indexOf(cname)<0) {
@@ -33,6 +41,52 @@ function addClass (el, cname) {
 function removeClass (el, cname) {
     el.className = el.className.replace(' '+cname, '');
 }
+
+/** GET SHELVES AND MAKE BOOKCASE **/
+
+let shelves = [];
+let CS = document.getElementById('Chronoshelves');
+
+let maxdepth = 0;
+function parseAge (age, depth=1) {
+    let td = document.createElement('td');
+    if (depth>maxdepth) { maxdepth=depth; }
+    shelves.push({ name: age.name, color: age.color, white: age.white, answer: td });
+    if (age.sub && age.sub.length>0) {
+        let [ firstrow, ccount ] = parseAge(age.sub[0], depth+1);
+        firstrow.insertBefore(td, firstrow.firstChild);
+        for (let i=1;i<age.sub.length;i++){
+            let [ _, count ] = parseAge(age.sub[i], depth+1);
+            ccount += count;
+        }
+        td.rowSpan = ccount;
+        return [ firstrow, ccount ];
+    } else {
+        let tr = document.createElement('tr');
+        td.depth = depth;
+        tr.appendChild(td);
+        CS.appendChild(tr);
+        return [ tr, 1 ];
+    }
+}
+for (let i=0;i<ages.length;i++){
+    parseAge(ages[i]);
+}
+for (let i=0;i<shelves.length;i++){
+    let td = shelves[i].answer;
+    if (td.depth&&td.depth<maxdepth) {
+        td.colSpan = 1+maxdepth-td.depth;
+    }
+}
+
+/** ADD INTERACTIVITY **/
+
+let SG = document.getElementById('Shelfgroup');
+let minleft = CS.getBoundingClientRect().right + 10;
+let cells = CS.querySelectorAll('td');
+let dragged = -1;
+let drop = -1;
+let totalCorrect = 0;
 
 for (let i=0; i<shelves.length; i++) {
     let shelf = shelves[i],
@@ -65,7 +119,7 @@ for (let i=0; i<shelves.length; i++) {
                 s.style.left = rect.left + 'px';
                 s.style.top = rect.top + 'px';
             }
-            if (drop == shelf.answer) {
+            if (c == shelf.answer) {
                 shelf.correct = true;
                 removeClass(s, 'wrong');
             } else {
@@ -91,7 +145,8 @@ for (let i=0; i<shelves.length; i++) {
 for (let i=0; i<cells.length; i++) {
     let c = cells[i],
         vert = c.rowSpan>1,
-        myheight = c.clientHeight;
+        myheight = c.clientHeight,
+        mywidth = c.clientWidth;
     c.dropped = -1;
     c.onmouseover = (e) => {
         if (dragged < 0 || c.dropped >= 0) { return; }
@@ -100,6 +155,8 @@ for (let i=0; i<cells.length; i++) {
         if (vert) {
             d.style.transform = 'rotate(-90deg)';
             d.style.width = myheight+'px';
+        } else {
+            d.style.width = mywidth+'px';
         }
     };
     c.onmouseout = (e) => {
@@ -108,7 +165,20 @@ for (let i=0; i<cells.length; i++) {
         let d = shelves[dragged].dom;
         if (vert) {
             d.style.transform = '';
-            d.style.width = '';
         }
+        d.style.width = '';
     };
 }
+
+/** OTHER **/
+
+let showErrors = document.getElementById('showErrors');
+function checkShowErrors () {
+    if (showErrors.checked) {
+        addClass(document.body, 'showErrors');
+    } else {
+        removeClass(document.body, 'showErrors');
+    }
+}
+checkShowErrors();
+showErrors.onchange = checkShowErrors;

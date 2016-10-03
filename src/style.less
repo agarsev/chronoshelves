@@ -40,7 +40,7 @@ table#Chronoshelves {
         border: @woodborder;
         width: @shelfw;
         height: @shelfh;
-        transition-property: transform, left, top;
+        transition-property: transform, width, left, top;
         transition-duration: 0.25s;
         z-index: 0;
         span {
@@ -52,10 +52,14 @@ table#Chronoshelves {
         &.ondrag {
             z-index: 1;
             pointer-events: none;
-            transition-property: transform;
+            transition-property: transform, width;
         }
-        &.wrong {
-            background: red;
-        }
+    }
+}
+
+.showErrors {
+    div.wrong {
+        color: black !important;
+        background: silver !important;
     }
 }
