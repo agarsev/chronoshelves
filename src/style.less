@@ -4,6 +4,10 @@
 @shelfw: 20vh;
 @shelfh: 6vh;
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     background: #60acfa;
 }
@@ -34,11 +38,19 @@ table#Chronoshelves {
         border: @woodborder;
         width: @shelfw;
         height: @shelfh;
+        transition-property: transform, left, top;
+        transition-duration: 0.25s;
+        z-index: 0;
         span {
             cursor: inherit;
             margin: auto;
             font-size: @shelfh/3;
             user-select: none;
+        }
+        &.ondrag {
+            z-index: 1;
+            pointer-events: none;
+            transition-property: transform;
         }
     }
 }
