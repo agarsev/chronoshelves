@@ -1,0 +1,44 @@
+@wood: #fd9;
+@woodborder: 1px solid darken(@wood, 20%);
+
+@shelfw: 20vh;
+@shelfh: 6vh;
+
+body {
+    background: #60acfa;
+}
+
+table#Chronoshelves {
+    background: @wood;
+    border: @woodborder;
+    tr {
+        padding: 1vh;
+    }
+    td {
+        border: @woodborder;
+        padding-top: @shelfh;
+        padding-left: @shelfw;
+        &[rowspan] {
+            padding-top: 0;
+            padding-left: @shelfh;
+        }
+    }
+}
+
+#Shelfgroup {
+    div {
+        cursor: pointer;
+        position: absolute;
+        display: flex;
+        background: @wood;
+        border: @woodborder;
+        width: @shelfw;
+        height: @shelfh;
+        span {
+            cursor: inherit;
+            margin: auto;
+            font-size: @shelfh/3;
+            user-select: none;
+        }
+    }
+}
