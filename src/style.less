@@ -6,6 +6,8 @@
 
 * {
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
 body {
@@ -51,6 +53,9 @@ table#Chronoshelves {
             z-index: 1;
             pointer-events: none;
             transition-property: transform;
+        }
+        &.wrong {
+            background: red;
         }
     }
 }
