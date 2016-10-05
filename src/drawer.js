@@ -10,14 +10,14 @@ function removeClass (el, cname) {
 
 export default class Drawer {
 
-    constructor ({shelf, startDrag, endDrag, name, color, iswhite=false}) {
+    constructor ({shelf, startDrag, endDrag, name, color, white=false}) {
         this.rightshelf = shelf;
         this.correct = 0; // -1, 0, 1
         this.startDrag = startDrag;
         this.endDrag = endDrag;
 
         this.div = document.createElement('div');
-        this.div.innerHTML = `<span style="color:${iswhite?'white':'auto'}">${name}</span>`;
+        this.div.innerHTML = `<span style="color:${white?'white':'auto'}">${name}</span>`;
         this.div.style.background = '#'+color;
         this.handlers = { startDrag: this.startDragHandler.bind(this),
                           drag: this.dragHandler.bind(this),
@@ -38,6 +38,7 @@ export default class Drawer {
 
     startDragHandler (e) {
         addClass(this.div, 'ondrag');
+        removeClass(this.div, 'dropped');
         document.addEventListener('mouseup', this.handlers.endDrag, true);
         document.addEventListener('mousemove', this.handlers.drag, false);
         this.startDrag(this);
@@ -60,6 +61,9 @@ export default class Drawer {
         } else {
             this.correct = 0;
             removeClass(this.div, 'wrong');
+        }
+        if (shelf) {
+            addClass(this.div, 'dropped');
         }
     }
 

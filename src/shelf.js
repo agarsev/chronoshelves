@@ -5,6 +5,7 @@ export default class Shelf {
         this.vertical = false;
         this.occupied = false;
         this.td = document.createElement('td');
+        this.td.style.backgroundPosition = `${Math.random()*100}% ${Math.random()*100}%`;
         this.td.onmouseover = () => mouseOver(this);
         this.td.onmouseout = () => mouseOut(this);
     }
@@ -38,11 +39,11 @@ export default class Shelf {
     drop (drawer) {
         let rect = this.td.getBoundingClientRect();
         if (this.vertical) {
-            drawer.div.style.left = ((rect.right+rect.left)/2-(rect.bottom-rect.top)/2) + 'px';
-            drawer.div.style.top = ((rect.top+rect.bottom)/2-drawer.div.clientHeight/2) + 'px';
+            drawer.div.style.left = ((rect.right+rect.left)/2-(rect.bottom-rect.top)/2) +1 + 'px';
+            drawer.div.style.top = ((rect.top+rect.bottom)/2-drawer.div.clientHeight/2) -1 + 'px';
         } else {
-            drawer.div.style.left = rect.left + 'px';
-            drawer.div.style.top = rect.top + 'px';
+            drawer.div.style.left = rect.left+1 + 'px';
+            drawer.div.style.top = rect.top+1 + 'px';
         }
     }
 

@@ -1,8 +1,14 @@
-@wood: #fd9;
-@woodborder: 1px solid darken(@wood, 20%);
+@border: 1px solid black;
+@granite: silver url('../res/granite.png') repeat;
+@shelfspace: 1ex;
+@drawerborder: @border;
+@drawerinside: silver;
+@shadowcolor: rgba(0,0,0,0.5);
 
 @shelfw: 20vh;
-@shelfh: 6vh;
+@shelfh: 5vh;
+
+@import 'https://fonts.googleapis.com/css?family=Catamaran';
 
 * {
     box-sizing: border-box;
@@ -11,17 +17,19 @@
 }
 
 body {
-    background: #60acfa;
+    background: #eddebb url('../res/fossils.png') repeat;
+    font-family: 'Catamaran', sans-serif;
 }
 
 table#Chronoshelves {
-    background: @wood;
-    border: @woodborder;
-    tr {
-        padding: 1vh;
-    }
+    background: @granite;
+    border: @border;
+    border-spacing: @shelfspace;
     td {
-        border: @woodborder;
+        background: @granite;
+        border: @border;
+        box-shadow: inset 0 -@shelfh/10 @shelfh/5 @shadowcolor;
+        padding: 0;
         padding-top: @shelfh;
         padding-left: @shelfw;
         &[rowspan] {
@@ -36,23 +44,28 @@ table#Chronoshelves {
         cursor: pointer;
         position: absolute;
         display: flex;
-        background: @wood;
-        border: @woodborder;
+        background: @drawerinside repeat;
+        border: @drawerborder;
+        box-shadow: 0 8px 6px -6px @shadowcolor;
         width: @shelfw;
         height: @shelfh;
         transition-property: transform, width, left, top;
         transition-duration: 0.25s;
         z-index: 0;
+        overflow: hidden;
         span {
             cursor: inherit;
             margin: auto;
-            font-size: @shelfh/3;
+            font-size: @shelfh/2.3;
             user-select: none;
         }
         &.ondrag {
             z-index: 1;
             pointer-events: none;
             transition-property: transform, width;
+        }
+        &.dropped {
+            box-shadow: none;
         }
     }
 }
