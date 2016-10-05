@@ -1,12 +1,12 @@
 @border: 1px solid black;
 @granite: silver url('../res/granite.png') repeat;
-@shelfspace: 1ex;
 @drawerborder: @border;
 @drawerinside: silver;
 @shadowcolor: rgba(0,0,0,0.5);
 
-@shelfw: 20vh;
 @shelfh: 5vh;
+@shelfspace: @shelfh/5;
+@shelfw: 4.5*@shelfh;
 
 @import 'https://fonts.googleapis.com/css?family=Catamaran';
 
@@ -58,6 +58,7 @@ table#Chronoshelves {
             margin: auto;
             font-size: @shelfh/2.3;
             user-select: none;
+            pointer-events: none;
         }
         &.ondrag {
             z-index: 1;

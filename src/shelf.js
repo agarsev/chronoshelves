@@ -6,8 +6,16 @@ export default class Shelf {
         this.occupied = false;
         this.td = document.createElement('td');
         this.td.style.backgroundPosition = `${Math.random()*100}% ${Math.random()*100}%`;
-        this.td.onmouseover = () => mouseOver(this);
-        this.td.onmouseout = () => mouseOut(this);
+        this.td.onmouseover = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            mouseOver(this);
+        };
+        this.td.onmouseout = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            mouseOut(this);
+        };
     }
 
     // expand to the right incomplete ages
@@ -24,8 +32,8 @@ export default class Shelf {
 
     adjustDrawer (drawer) {
         if (this.vertical) {
-            drawer.div.style.transform = 'rotate(-90deg)';
             drawer.div.style.width = this.td.clientHeight+'px';
+            drawer.div.style.transform = 'rotate(-90deg)';
         } else {
             drawer.div.style.width = this.td.clientWidth+'px';
         }
@@ -39,11 +47,11 @@ export default class Shelf {
     drop (drawer) {
         let rect = this.td.getBoundingClientRect();
         if (this.vertical) {
-            drawer.div.style.left = ((rect.right+rect.left)/2-(rect.bottom-rect.top)/2) +1 + 'px';
-            drawer.div.style.top = ((rect.top+rect.bottom)/2-drawer.div.clientHeight/2) -1 + 'px';
+            drawer.div.style.left = ((rect.right+rect.left)/2-(rect.bottom-rect.top)/2)+window.scrollX+1 + 'px';
+            drawer.div.style.top = ((rect.top+rect.bottom)/2-drawer.div.clientHeight/2)+window.scrollY-1 + 'px';
         } else {
-            drawer.div.style.left = rect.left+1 + 'px';
-            drawer.div.style.top = rect.top+1 + 'px';
+            drawer.div.style.left = rect.left+window.scrollX+1 + 'px';
+            drawer.div.style.top = rect.top+window.scrollY+1 + 'px';
         }
     }
 

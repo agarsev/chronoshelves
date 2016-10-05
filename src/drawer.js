@@ -32,11 +32,15 @@ export default class Drawer {
     }
 
     dragHandler (e) {
-        this.div.style.left = (e.clientX-this.div.clientWidth/2)+"px";
-        this.div.style.top = (e.clientY-this.div.clientHeight/2)+"px";
+        e.preventDefault();
+        e.stopPropagation();
+        this.div.style.left = (window.scrollX+e.clientX-this.div.clientWidth/2)+"px";
+        this.div.style.top = (window.scrollY+e.clientY-this.div.clientHeight/2)+"px";
     }
 
     startDragHandler (e) {
+        e.preventDefault();
+        e.stopPropagation();
         addClass(this.div, 'ondrag');
         removeClass(this.div, 'dropped');
         document.addEventListener('mouseup', this.handlers.endDrag, true);
@@ -45,6 +49,8 @@ export default class Drawer {
     }
 
     endDragHandler (e) {
+        e.preventDefault();
+        e.stopPropagation();
         removeClass(this.div, 'ondrag');
         document.removeEventListener('mousemove', this.handlers.drag, false);
         document.removeEventListener('mouseup', this.handlers.endDrag, true);
