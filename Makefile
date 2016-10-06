@@ -7,7 +7,7 @@ MAIN:=main.js
 all: out/bundle.js
 
 out/bundle.js: $(LIB) $(CSS)
-	browserify out/$(MAIN) -o $@
+	rollup out/$(MAIN) >$@
 
 out/%.js: src/%.js
 	@mkdir -p $(@D)
