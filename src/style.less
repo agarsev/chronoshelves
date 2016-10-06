@@ -21,6 +21,25 @@ body {
     font-family: 'Catamaran', sans-serif;
 }
 
+header {
+    display: block;
+    width: 100vw;
+    text-align: center;
+}
+
+footer {
+    display: block;
+    width: 100vw;
+    text-align: right;
+}
+
+main {
+    display: flex;
+    padding: 1vh;
+    justify-content: center;
+    width: 100vw;
+}
+
 table#Chronoshelves {
     background: @granite;
     border: @border;
@@ -39,7 +58,10 @@ table#Chronoshelves {
     }
 }
 
-#Shelfgroup {
+#Drawerlayer {
+    flex: 1;
+    max-width: 60vw;
+    display: inline-block;
     div {
         cursor: pointer;
         position: absolute;

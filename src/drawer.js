@@ -22,13 +22,13 @@ export default class Drawer {
         this.handlers = { startDrag: this.startDragHandler.bind(this),
                           drag: this.dragHandler.bind(this),
                           endDrag: this.endDragHandler.bind(this) };
+        this.div.addEventListener('mousedown', this.handlers.startDrag, true);
     }
 
-    mount (dom) {
-        this.div.style.left = (50+Math.random()*40)+"vw";
-        this.div.style.top = (10+Math.random()*80)+"vh";
-        this.div.addEventListener('mousedown', this.handlers.startDrag, true);
-        dom.appendChild(this.div);
+    resetPosition (dom) {
+        let r = dom.getBoundingClientRect();
+        this.div.style.left = (r.left+(r.right-r.left)*(0.05+Math.random()*0.7))+"px";
+        this.div.style.top = (r.top+(r.bottom-r.top)*(0.05+Math.random()*0.8))+"px";
     }
 
     dragHandler (e) {

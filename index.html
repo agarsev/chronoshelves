@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <html>
 <head>
     <meta charset="UTF-8" />
+    <meta name="Description" content="Chronoshelves: An interactive display and
+    quizz of chronological units. Author: Antonio F. G. Sevilla" />
     <title>Chronoshelves</title>
     <link rel="stylesheet" href="out/style.css" />
 </head>
@@ -54,9 +56,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         { name: "Precambrian", color: "F74370" }
     ];
     </script>
-    <table id="Chronoshelves"></table>
-    <div id="Shelfgroup"></div>
+    <header>
     <input id="showErrors" type="checkbox">Show errors</input>
+    </header>
+    <main>
+    <table id="Chronoshelves"></table>
+    <div id="Drawerlayer"></div>
+    </main>
+    <footer>Chronoshelves - by <a href="garciasevilla.com">Antonio F. G. Sevilla</a></footer>
     <script src="out/bundle.js"></script>
 </body>
 </html>

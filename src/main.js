@@ -1,7 +1,7 @@
 import Shelves from './shelves';
 
 let myShelves = new Shelves(ages, document.getElementById('Chronoshelves'),
-                            document.getElementById('Shelfgroup'));
+                            document.getElementById('Drawerlayer'));
 
 let showErrors = document.getElementById('showErrors');
 function checkShowErrors () {

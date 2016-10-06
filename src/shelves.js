@@ -17,6 +17,7 @@ export default class Shelves {
         this.maxdepth = 0;
         ages.forEach(x => this.addAge(x));
         this.shelves.forEach(x => x.expandRight(this.maxdepth));
+        this.drawers.forEach(x => x.resetPosition(this.layer));
     }
 
     /* age: name(str), color(str), sub(ages) */
@@ -32,7 +33,7 @@ export default class Shelves {
                                 startDrag: this.startDragDrawer.bind(this),
                                 endDrag: this.endDragDrawer.bind(this),
                                 ...age});
-        drawer.mount(this.layer);
+        this.layer.appendChild(drawer.div);
         this.drawers.push(drawer);
 
         // create table & row structure
