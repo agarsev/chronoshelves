@@ -74,7 +74,7 @@ export default class Shelves {
     mouseOutShelf (shelf) {
         this.currentShelf = null;
         if (this.currentDrawer) {
-            shelf.deadjustDrawer(this.currentDrawer);
+            Shelf.deadjustDrawer(this.currentDrawer);
         }
     }
 

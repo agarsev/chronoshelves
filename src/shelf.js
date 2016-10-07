@@ -39,7 +39,7 @@ export default class Shelf {
         }
     }
 
-    deadjustDrawer (drawer) {
+    static deadjustDrawer (drawer) {
         drawer.div.style.transform = '';
         drawer.div.style.width = '';
     }
