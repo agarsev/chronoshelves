@@ -20,6 +20,10 @@ export default class Shelves {
         this.drawers.forEach(x => x.resetPosition(this.layer));
     }
 
+    reset () {
+        this.drawers.forEach(x => x.resetPosition(this.layer));
+    }
+
     /* age: name(str), color(str), sub(ages) */
     addAge (age, depth=1) {
 

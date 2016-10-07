@@ -22,3 +22,6 @@ function checkShowErrors () {
 }
 checkShowErrors();
 showErrors.onchange = checkShowErrors;
+
+let resetButton = document.getElementById('reset');
+resetButton.onclick = () => myShelves.reset();
