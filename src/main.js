@@ -18,8 +18,25 @@ document.getElementById('reset').onclick = () => {
     myShelves.reset();
 };
 
+let overlay = document.getElementById('overlay');
+
+function showDialog (id, text) {
+    let d = document.getElementById(id);
+    if (text) {
+        d.innerHTML = text;
+    }
+    overlay.style.display = 'block';
+    d.className = '';
+    d.onclick = () => {
+        overlay.style.display = 'none';
+        d.className = 'out';
+    };
+}
+
 document.getElementById('score').onclick = () => {
     document.body.className = 'showErrors';
     let {score,total} = myShelves.score();
-    alert(`You got ${score} out of ${total}`);
+    showDialog('results', `<p>You got ${score} out of ${total}</p>`);
 };
+
+document.getElementById('aboutButton').onclick = () => showDialog('about');
