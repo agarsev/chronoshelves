@@ -55,4 +55,9 @@ export default class Shelf {
         }
     }
 
+    isInside (x, y) {
+        let r = this.td.getBoundingClientRect();
+        return (x>=r.left) && (x<=r.right) && (y>=r.top) && (y<=r.bottom);
+    }
+
 }

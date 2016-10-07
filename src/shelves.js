@@ -18,6 +18,7 @@ export default class Shelves {
         ages.forEach(x => this.addAge(x));
         this.shelves.forEach(x => x.expandRight(this.maxdepth));
         this.drawers.forEach(x => x.resetPosition(this.layer));
+        document.addEventListener('touchmove', this.checkTouchShelf.bind(this), false);
     }
 
     reset () {
@@ -95,6 +96,18 @@ export default class Shelves {
             let minleft = this.root.getBoundingClientRect().right + 10;
             if (drawer.div.offsetLeft < minleft) {
                 drawer.div.style.left = minleft+'px';
+            }
+        }
+    }
+
+    checkTouchShelf (e) {
+        let t = e.touches[0];
+        for (let i = 0; i<this.shelves.length; i++) {
+            let s = this.shelves[i];
+            if (s.isInside(t.clientX, t.clientY)) {
+                this.mouseOverShelf(s);
+            } else if (s == this.currentShelf) {
+                this.mouseOutShelf(s);
             }
         }
     }

@@ -21,10 +21,14 @@ export default class Drawer {
         this.div = document.createElement('div');
         this.div.innerHTML = `<span style="color:${white?'white':'auto'}">${name}</span>`;
         this.div.style.background = '#'+color;
-        this.handlers = { startDrag: this.startDragHandler.bind(this),
-                          drag: this.dragHandler.bind(this),
-                          endDrag: this.endDragHandler.bind(this) };
+        this.handlers = { startDrag: this.startDragHandler.bind(this, false),
+                          drag: this.dragHandler.bind(this, false),
+                          endDrag: this.endDragHandler.bind(this, false),
+                          startTouch: this.startDragHandler.bind(this, true),
+                          touch: this.dragHandler.bind(this, true),
+                          endTouch: this.endDragHandler.bind(this, true) };
         this.div.addEventListener('mousedown', this.handlers.startDrag, true);
+        this.div.addEventListener('touchstart', this.handlers.startTouch, true);
     }
 
     resetPosition (dom) {
@@ -37,30 +41,43 @@ export default class Drawer {
         this.div.style.top = (r.top+(r.bottom-r.top)*(0.05+Math.random()*0.8))+"px";
     }
 
-    dragHandler (e) {
-        e.preventDefault();
-        e.stopPropagation();
+    dragHandler (istouch, e) {
+        if (istouch) {
+            e = e.touches[0];
+        }
         this.div.style.left = (window.scrollX+e.clientX-this.div.clientWidth/2)+"px";
         this.div.style.top = (window.scrollY+e.clientY-this.div.clientHeight/2)+"px";
     }
 
-    startDragHandler (e) {
+    startDragHandler (istouch, e) {
         e.preventDefault();
         e.stopPropagation();
         addClass(this.div, 'ondrag');
         removeClass(this.div, 'dropped');
         removeClass(this.div, 'wrong');
-        document.addEventListener('mouseup', this.handlers.endDrag, true);
-        document.addEventListener('mousemove', this.handlers.drag, false);
+        if (istouch) {
+            document.addEventListener('touchend', this.handlers.endTouch, true);
+            document.addEventListener('touchcancel', this.handlers.endTouch, true);
+            document.addEventListener('touchmove', this.handlers.touch, false);
+        } else {
+            document.addEventListener('mouseup', this.handlers.endDrag, true);
+            document.addEventListener('mousemove', this.handlers.drag, false);
+        }
         this.startDrag(this);
     }
 
-    endDragHandler (e) {
+    endDragHandler (istouch, e) {
         e.preventDefault();
         e.stopPropagation();
         removeClass(this.div, 'ondrag');
-        document.removeEventListener('mousemove', this.handlers.drag, false);
-        document.removeEventListener('mouseup', this.handlers.endDrag, true);
+        if (istouch) {
+            document.removeEventListener('touchmove', this.handlers.touch, false);
+            document.removeEventListener('touchcancel', this.handlers.endTouch, true);
+            document.removeEventListener('touchend', this.handlers.endTouch, true);
+        } else {
+            document.removeEventListener('mousemove', this.handlers.drag, false);
+            document.removeEventListener('mouseup', this.handlers.endDrag, true);
+        }
         this.endDrag(this);
     }
 
