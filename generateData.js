@@ -16,4 +16,4 @@ function b64EncodeUnicode(str) {
     }));
 }
 
-console.log(b64EncodeUnicode(JSON.stringify(ages)));
+console.log('export default "'+b64EncodeUnicode(JSON.stringify(ages))+'";\n');

@@ -6,8 +6,12 @@ MAIN:=main.js
 
 all: out/bundle.js
 
-out/bundle.js: $(LIB) $(CSS)
+out/bundle.js: $(LIB) $(CSS) out/ages.js
 	rollup out/$(MAIN) >$@
+
+out/ages.js: ages.yaml
+	@mkdir -p $(@D)
+	./generateData.js $< >$@
 
 out/%.js: src/%.js
 	@mkdir -p $(@D)

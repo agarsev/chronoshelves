@@ -1,6 +1,5 @@
 import Shelves from './shelves';
-
-let ages = document.getElementById('agesdata').textContent;
+import ages from './ages';
 
 function b64DecodeUnicode(str) {
     return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
