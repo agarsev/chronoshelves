@@ -1,12 +1,11 @@
 SRC:=$(wildcard src/*.js)
 LIB:=$(SRC:src/%.js=out/%.js)
-LESS:=$(wildcard src/*.less)
-CSS:=$(LESS:src/%.less=out/%.css)
 MAIN:=main.js
+ALL:=out/bundle.js out/style.css
 
-all: out/bundle.js
+all: $(ALL)
 
-out/bundle.js: $(LIB) $(CSS) out/ages.js
+out/bundle.js: $(LIB) out/ages.js
 	rollup out/$(MAIN) >$@
 
 out/ages.js: ages.yaml
@@ -21,9 +20,14 @@ out/%.css: src/%.less
 	@mkdir -p $(@D)
 	lessc $< --autoprefix="last 2 versions" >$@
 
-.PHONY: clean
+out/dist.zip: $(ALL)
+	zip -r $@ index.html LICENSE res $(ALL)
+
+.PHONY: clean dist
 
 clean:
 	rm -rf out
+
+dist: out/dist.zip
 
 .DELETE_ON_ERROR:
