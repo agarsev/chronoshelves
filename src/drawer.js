@@ -36,6 +36,7 @@ export default class Drawer {
         removeClass(this.div, 'dropped');
         removeClass(this.div, 'wrong');
         this.correct = 0;
+        this.droppedshelf = undefined;
         Shelf.deadjustDrawer(this);
         this.div.style.left = (r.left+(r.right-r.left)*(0.05+Math.random()*0.7))+"px";
         this.div.style.top = (r.top+(r.bottom-r.top)*(0.05+Math.random()*0.8))+"px";
@@ -82,6 +83,7 @@ export default class Drawer {
     }
 
     drop (shelf) {
+        this.droppedshelf = shelf;
         if (shelf && shelf == this.rightshelf) {
             this.correct = 1;
             removeClass(this.div, 'wrong');
