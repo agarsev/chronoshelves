@@ -11,17 +11,15 @@ function b64DecodeUnicode(str) {
 let myShelves = new Shelves(JSON.parse(b64DecodeUnicode(ages)),
                             document.getElementById('Chronoshelves'),
                             document.getElementById('Drawerlayer'));
+myShelves.startDragNotify = () => document.body.className = '';
 
-let showErrors = document.getElementById('showErrors');
-function checkShowErrors () {
-    if (showErrors.checked) {
-        document.body.className = 'showErrors';
-    } else {
-        document.body.className = '';
-    }
-}
-checkShowErrors();
-showErrors.onchange = checkShowErrors;
+document.getElementById('reset').onclick = () => {
+    document.body.className = '';
+    myShelves.reset();
+};
 
-let resetButton = document.getElementById('reset');
-resetButton.onclick = () => myShelves.reset();
+document.getElementById('score').onclick = () => {
+    document.body.className = 'showErrors';
+    let {score,total} = myShelves.score();
+    alert(`You got ${score} out of ${total}`);
+};

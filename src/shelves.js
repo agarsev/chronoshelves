@@ -24,6 +24,11 @@ export default class Shelves {
         this.drawers.forEach(x => x.resetPosition(this.layer));
     }
 
+    score () {
+        let score = this.drawers.reduce((sum, x) => sum+(x.correct>0?1:0), 0);
+        return { score, total: this.drawers.length };
+    }
+
     /* age: name(str), color(str), sub(ages) */
     addAge (age, depth=1) {
 
@@ -75,6 +80,9 @@ export default class Shelves {
 
     startDragDrawer (drawer) {
         this.currentDrawer = drawer;
+        if (this.startDragNotify) {
+            this.startDragNotify();
+        }
     }
 
     endDragDrawer (drawer) {
@@ -89,8 +97,6 @@ export default class Shelves {
                 drawer.div.style.left = minleft+'px';
             }
         }
-        let totalCorrect = this.drawers.reduce((sum, x) => sum+(x.correct>0?1:0), 0);
-        console.log(totalCorrect);
     }
 
 };
