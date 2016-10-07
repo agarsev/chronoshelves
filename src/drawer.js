@@ -31,6 +31,7 @@ export default class Drawer {
         let r = dom.getBoundingClientRect();
         removeClass(this.div, 'dropped');
         removeClass(this.div, 'wrong');
+        this.correct = 0;
         Shelf.deadjustDrawer(this);
         this.div.style.left = (r.left+(r.right-r.left)*(0.05+Math.random()*0.7))+"px";
         this.div.style.top = (r.top+(r.bottom-r.top)*(0.05+Math.random()*0.8))+"px";

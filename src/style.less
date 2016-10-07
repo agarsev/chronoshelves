@@ -18,21 +18,20 @@
 }
 
 body {
+    padding: 2vh;
     background: @fossils;
     font-family: 'Catamaran', sans-serif;
 }
 
 header {
     display: block;
-    width: 100vw;
+    width: 100%;
     text-align: center;
 }
 
 main {
     display: flex;
-    padding: 1vh;
     justify-content: center;
-    width: 100vw;
 }
 
 table#Chronoshelves {
@@ -96,12 +95,12 @@ table#Chronoshelves {
 }
 
 #overlay {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.3);
     display: none;
 }
 
@@ -112,7 +111,9 @@ aside {
     left: 0;
     width: 100%;
     height: 100%;
-    p {
+    & > * {
+        max-width: 50vw;
+        font-size: @shelfh/2;
         margin: auto;
         padding: 2em;
         border: 1px solid black;
@@ -123,5 +124,28 @@ aside {
     transition-duration: 0.25s;
     &.out {
         top: -100%;
+    }
+}
+
+button {
+    font-family: inherit;
+    font-size: @shelfh/2;
+    padding: @shelfh/16 @shelfh/4;
+    margin: @shelfh/8;
+    background: @fossils;
+    border: 1px solid black;
+    border-radius: @shelfh/2;
+    cursor: pointer;
+}
+
+footer {
+    margin-top: 3ex;
+    margin-bottom: -1ex;
+    text-align: right;
+    font-size: 86%;
+    font-style: italic;
+    a {
+        color: inherit;
+        text-decoration: none;
     }
 }

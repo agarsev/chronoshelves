@@ -27,6 +27,7 @@ function showDialog (id, text) {
     }
     overlay.style.display = 'block';
     d.className = '';
+    d.firstChild.onclick = e => e.stopPropagation();
     d.onclick = () => {
         overlay.style.display = 'none';
         d.className = 'out';
@@ -36,7 +37,7 @@ function showDialog (id, text) {
 document.getElementById('score').onclick = () => {
     document.body.className = 'showErrors';
     let {score,total} = myShelves.score();
-    showDialog('results', `<p>You got ${score} out of ${total}</p>`);
+    showDialog('results', `<p>You got ${score} out of ${total}.${score==total?' Well done!':''}</p>`);
 };
 
 document.getElementById('aboutButton').onclick = () => showDialog('about');
