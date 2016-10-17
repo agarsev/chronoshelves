@@ -19,6 +19,13 @@
           color: FFFF00
     - name: Paleogene
       color: FD9A52
+      sub:
+        - name: Oligocene
+          color: FDC07A
+        - name: Eocene
+          color: FDB46C
+        - name: Paleocene
+          color: FDA75F
 - name: Mesozoic
   color: 67C5CA
   sub:
