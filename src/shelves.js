@@ -99,9 +99,18 @@ export default class Shelves {
             drawer.drop(this.currentShelf);
         } else {
             drawer.drop(null);
-            let minleft = this.root.getBoundingClientRect().right + 10;
-            if (drawer.div.offsetLeft < minleft) {
-                drawer.div.style.left = minleft+'px';
+            let r = this.layer.getBoundingClientRect(),
+                d = drawer.div.getBoundingClientRect(),
+                margin = 10;
+            if (d.left<=r.left) {
+                drawer.div.style.left = r.left+margin+"px";
+            } else if (d.right>=r.right) {
+                drawer.div.style.left = r.right-d.width-margin+"px";
+            }
+            if (d.top<=r.top) {
+                drawer.div.style.top = r.top+margin+"px";
+            } else if (d.bottom>=r.bottom) {
+                drawer.div.style.top= r.bottom-d.height-margin+"px";
             }
         }
     }
