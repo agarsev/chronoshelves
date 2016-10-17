@@ -16,8 +16,15 @@ export default class Shelves {
 
         this.maxdepth = 0;
         ages.forEach(x => this.addAge(x));
+
+        // append drawers in random order
+        let r = this.drawers.map((_,i) => ({i,v:Math.random()}));
+        r.sort((a,b) => a.v - b.v);
+        r.forEach(({i,v}) => this.layer.appendChild(this.drawers[i].div));
+
         this.shelves.forEach(x => x.expandRight(this.maxdepth));
         this.drawers.forEach(x => x.resetPosition(this.layer));
+
         document.addEventListener('touchmove', this.checkTouchShelf.bind(this), false);
         window.onresize = () => this.drawers.forEach(d => {
             if (d.droppedshelf) {
@@ -49,7 +56,6 @@ export default class Shelves {
                                 startDrag: this.startDragDrawer.bind(this),
                                 endDrag: this.endDragDrawer.bind(this),
                                 ...age});
-        this.layer.appendChild(drawer.div);
         this.drawers.push(drawer);
 
         // create table & row structure
