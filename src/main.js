@@ -1,5 +1,8 @@
 import Shelves from './shelves';
 import ages from './ages';
+import BiHTML, { setLang } from './bihtml';
+
+// BUILD SHELVING
 
 function b64DecodeUnicode(str) {
     return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
@@ -7,15 +10,13 @@ function b64DecodeUnicode(str) {
     }).join(''));
 }
 
-let myShelves = new Shelves(JSON.parse(b64DecodeUnicode(ages)),
+let agedata = JSON.parse(b64DecodeUnicode(ages));
+let myShelves = new Shelves(agedata.ages,
                             document.getElementById('Chronoshelves'),
                             document.getElementById('Drawerlayer'));
 myShelves.startDragNotify = () => document.body.className = '';
 
-document.getElementById('reset').onclick = () => {
-    document.body.className = '';
-    myShelves.reset();
-};
+// DIALOGS
 
 let overlay = document.getElementById('overlay');
 
@@ -33,10 +34,39 @@ function showDialog (id, text) {
     };
 }
 
-document.getElementById('score').onclick = () => {
+// TEXT AND BUTTONS
+
+let about = document.getElementById('about').firstChild,
+    aboutButton = document.getElementById('aboutButton');
+about.insertBefore(new BiHTML(agedata.about), about.firstChild);
+aboutButton.onclick = () => showDialog('about');
+aboutButton.appendChild(new BiHTML(agedata.buttons.about));
+
+function reset () {
+    document.body.className = '';
+    myShelves.reset();
+}
+let resetButton = document.getElementById('reset');
+resetButton.onclick = reset;
+resetButton.appendChild(new BiHTML(agedata.buttons.reset));
+
+let lang = 0,
+    langButton = document.getElementById('switchLang');
+langButton.onclick = () => {
+    lang = lang==0?1:0;
+    reset();
+    setLang(lang);
+};
+langButton.appendChild(new BiHTML(['Spanish', 'English']));
+
+let scoreButton = document.getElementById('score');
+scoreButton.onclick = () => {
     document.body.className = 'showErrors';
     let {score,total} = myShelves.score();
-    showDialog('results', `<p>You got ${score} out of ${total}.${score==total?' Well done!':''}</p>`);
+    let text = agedata.score[lang];
+    text = text.replace('{{score}}', score);
+    text = text.replace('{{total}}', total);
+    text = text.replace(/{{\?([^}]*)}}/, score==total?'$1':'');
+    showDialog('results', `<p>${text}</p>`);
 };
-
-document.getElementById('aboutButton').onclick = () => showDialog('about');
+scoreButton.appendChild(new BiHTML(agedata.buttons.score));

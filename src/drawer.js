@@ -1,4 +1,5 @@
 import Shelf from './shelf';
+import BiHTML from './bihtml';
 
 function addClass (el, cname) {
     if (el.className.indexOf(cname)<0) {
@@ -19,7 +20,10 @@ export default class Drawer {
         this.endDrag = endDrag;
 
         this.div = document.createElement('div');
-        this.div.innerHTML = `<span style="color:${white?'white':'auto'}">${name}</span>`;
+        this.div.appendChild(new BiHTML(name));
+        if (white) {
+            this.div.style = "color:white;";
+        }
         this.div.style.background = '#'+color;
         this.handlers = { startDrag: this.startDragHandler.bind(this, false),
                           drag: this.dragHandler.bind(this, false),
