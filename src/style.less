@@ -136,6 +136,17 @@ button {
     border: 1px solid black;
     border-radius: @shelfh/2;
     cursor: pointer;
+    overflow: hidden;
+    min-width: 3em;
+    background-size: 100% 100%;
+    outline: none;
+    span {
+        user-select: none;
+        outline: none;
+    }
+    &::-moz-focus-inner {
+        border: 0;
+    }
 }
 
 footer {

@@ -53,11 +53,17 @@ resetButton.appendChild(new BiHTML(agedata.buttons.reset));
 let lang = 0,
     langButton = document.getElementById('switchLang');
 langButton.onclick = () => {
-    lang = lang==0?1:0;
+    if (lang == 0) {
+        lang = 1;
+        langButton.style.backgroundImage='url(res/flag_en.png)';
+    } else {
+        lang = 0;
+        langButton.style.backgroundImage='url(res/flag_es.png)';
+    }
     reset();
     setLang(lang);
 };
-langButton.appendChild(new BiHTML(['Spanish', 'English']));
+langButton.style.backgroundImage='url(res/flag_es.png)';
 
 let scoreButton = document.getElementById('score');
 scoreButton.onclick = () => {
