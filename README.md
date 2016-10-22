@@ -14,11 +14,16 @@ incorrectly placed drawers marked.
 
 Live demo
 ---------
-See a live demo at [https://garciasevilla.com/apps/chronoshelves](https://garciasevilla.com/apps/chronoshelves).
+See live demos at:
+- [https://garciasevilla.com/apps/chronoshelves](https://garciasevilla.com/apps/chronoshelves): the periods of Earth history.
+- [https://garciasevilla.com/apps/chronoshelves/history](https://garciasevilla.com/apps/chronoshelves/history): an example alternative scale.
 
 Usage
 -----
-To generate a different timescale, modify `ages.yaml` and then run make.
+To generate a different timescale, run make with the AGES parameter set to the
+appropriate datafile:
+
+    make AGES=history/history.yaml
 
 Distribution
 ------------

@@ -5,6 +5,7 @@ export default class Shelf {
         this.vertical = false;
         this.occupied = false;
         this.td = document.createElement('td');
+        this.td.className = "shelves-texture";
         this.td.style.backgroundPosition = `${Math.random()*100}% ${Math.random()*100}%`;
         this.td.onmouseover = (e) => {
             e.preventDefault();

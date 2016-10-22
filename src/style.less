@@ -1,7 +1,8 @@
 @border: 1px solid black;
 @granite: silver url('../res/granite.png') repeat;
 @drawerborder: @border;
-@drawerinside: silver;
+@drawerinside: white;
+@errorbackground: silver;
 @shadowcolor: rgba(0,0,0,0.5);
 @fossils: #eddebb url('../res/fossils.png') repeat;
 
@@ -17,9 +18,16 @@
     margin: 0;
 }
 
+.page-background {
+    background: @fossils;
+}
+
+.shelves-texture {
+    background: @granite;
+}
+
 body {
     padding: 2vh;
-    background: @fossils;
     font-family: 'Catamaran', sans-serif;
 }
 
@@ -35,11 +43,9 @@ main {
 }
 
 table#Chronoshelves {
-    background: @granite;
     border: @border;
     border-spacing: @shelfspace;
     td {
-        background: @granite;
         border: @border;
         box-shadow: inset 0 -@shelfh/10 @shelfh/5 @shadowcolor;
         padding: 0;
@@ -69,6 +75,7 @@ table#Chronoshelves {
         transition-duration: 0.25s;
         z-index: 0;
         overflow: hidden;
+        white-space: nowrap;
         span {
             cursor: inherit;
             margin: auto;
@@ -90,7 +97,7 @@ table#Chronoshelves {
 .showErrors {
     div.wrong {
         color: black !important;
-        background: silver !important;
+        background: @errorbackground !important;
     }
 }
 
@@ -117,7 +124,6 @@ aside {
         margin: auto;
         padding: 2em;
         border: 1px solid black;
-        background: @fossils;
         box-shadow: 0 8px 6px -6px @shadowcolor;
     }
     transition-property: bottom;
@@ -132,7 +138,6 @@ button {
     font-size: @shelfh/2;
     padding: @shelfh/16 @shelfh/4;
     margin: @shelfh/8;
-    background: @fossils;
     border: 1px solid black;
     border-radius: @shelfh/2;
     cursor: pointer;

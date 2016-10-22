@@ -10,11 +10,19 @@ function b64DecodeUnicode(str) {
     }).join(''));
 }
 
+let dlayer = document.getElementById('Drawerlayer');
 let agedata = JSON.parse(b64DecodeUnicode(ages));
 let myShelves = new Shelves(agedata.ages,
                             document.getElementById('Chronoshelves'),
-                            document.getElementById('Drawerlayer'));
-myShelves.startDragNotify = () => document.body.className = '';
+                            dlayer);
+myShelves.startDragNotify = () => dlayer.className = '';
+
+if (agedata.style) {
+    let custom = document.createElement('style');
+    custom.type = 'text/css';
+    custom.appendChild(document.createTextNode(agedata.style));
+    document.head.appendChild(custom);
+}
 
 // DIALOGS
 
@@ -43,7 +51,7 @@ aboutButton.onclick = () => showDialog('about');
 aboutButton.appendChild(new BiHTML(agedata.buttons.about));
 
 function reset () {
-    document.body.className = '';
+    dlayer.className = '';
     myShelves.reset();
 }
 let resetButton = document.getElementById('reset');
@@ -67,12 +75,12 @@ langButton.style.backgroundImage='url(res/flag_es.png)';
 
 let scoreButton = document.getElementById('score');
 scoreButton.onclick = () => {
-    document.body.className = 'showErrors';
+    dlayer.className = 'showErrors';
     let {score,total} = myShelves.score();
     let text = agedata.score[lang];
     text = text.replace('{{score}}', score);
     text = text.replace('{{total}}', total);
     text = text.replace(/{{\?([^}]*)}}/, score==total?'$1':'');
-    showDialog('results', `<p>${text}</p>`);
+    showDialog('results', `<p class="page-background">${text}</p>`);
 };
 scoreButton.appendChild(new BiHTML(agedata.buttons.score));

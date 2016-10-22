@@ -3,12 +3,14 @@ LIB:=$(SRC:src/%.js=out/%.js)
 MAIN:=main.js
 ALL:=out/bundle.js out/style.css
 
+AGES:=ages.yaml
+
 all: $(ALL)
 
 out/bundle.js: $(LIB) out/ages.js
 	rollup out/$(MAIN) >$@
 
-out/ages.js: ages.yaml
+out/ages.js: $(AGES)
 	@mkdir -p $(@D)
 	./generateData.js $< >$@
 
