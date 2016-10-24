@@ -24,6 +24,22 @@ if (agedata.style) {
     document.head.appendChild(custom);
 }
 
+// Fit shelves
+
+
+function resize () {
+    if (window.innerWidth>0.75*window.innerHeight) {
+        let top = document.querySelector('nav').getBoundingClientRect().bottom;
+        let n_shelves = myShelves.root.querySelectorAll('tr').length;
+        document.body.style.fontSize = 3*(window.innerHeight-top)/n_shelves+'px';
+    } else {
+        document.body.style.fontSize = '';
+    }
+    myShelves.resize();
+}
+resize();
+window.onresize = resize;
+
 // DIALOGS
 
 let overlay = document.getElementById('overlay');

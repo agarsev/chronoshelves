@@ -6,9 +6,10 @@
 @shadowcolor: rgba(0,0,0,0.5);
 @fossils: #eddebb url('../res/fossils.png') repeat;
 
-@shelfh: 4.2vh;
+@bodyspacing: 1vh;
+@shelfh: @shelfw/4;
 @shelfspace: @shelfh/6;
-@shelfw: 4*@shelfh;
+@shelfw: 1em;
 
 @import 'https://fonts.googleapis.com/css?family=Catamaran';
 
@@ -27,14 +28,16 @@
 }
 
 body {
-    padding: 2vh;
+    font-size: 20vmin;
+    padding: @bodyspacing;
     font-family: 'Catamaran', sans-serif;
 }
 
-header {
+nav {
+    padding-bottom: @bodyspacing;
     display: block;
-    width: 100%;
     text-align: center;
+    line-height: 0;
 }
 
 main {
@@ -136,10 +139,10 @@ aside {
 button {
     font-family: inherit;
     font-size: @shelfh/2;
-    padding: @shelfh/16 @shelfh/4;
-    margin: @shelfh/8;
+    padding: 0.2em 0.8em;
+    margin: 0 0.3em;
     border: 1px solid black;
-    border-radius: @shelfh/2;
+    border-radius: 0.8em;
     cursor: pointer;
     overflow: hidden;
     min-width: 3em;

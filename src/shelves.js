@@ -26,10 +26,15 @@ export default class Shelves {
         this.drawers.forEach(x => x.resetPosition(this.layer));
 
         document.addEventListener('touchmove', this.checkTouchShelf.bind(this), false);
-        window.onresize = () => this.drawers.forEach(d => {
+    }
+
+    resize () {
+        this.drawers.forEach(d => {
             if (d.droppedshelf) {
                 d.droppedshelf.adjustDrawer(d);
                 d.droppedshelf.drop(d);
+            } else {
+                d.resetPosition(this.layer);
             }
         });
     }
